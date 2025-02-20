@@ -1,0 +1,12 @@
+{
+  "domain": "mitsubishi_connect",
+  "name": "Integration blueprint",
+  "codeowners": [
+    "@pcartwright81"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/pcartwright81/mitsubishi_connect",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/pcartwright81/mitsubishi_connect/issues",
+  "version": "0.1.0"
+}
