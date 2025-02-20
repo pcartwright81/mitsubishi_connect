@@ -36,7 +36,11 @@
             }
         }
     },
-    "remoteUser": "vscode",
+    "runArgs": [
+		"--userns=keep-id"
+	],
+	"remoteUser": "vscode",
+	"containerUser": "vscode",
     "features": {
         "ghcr.io/devcontainers-extra/features/apt-packages:1": {
             "packages": [

@@ -8,18 +8,20 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from homeassistant.config_entries import ConfigEntry
     from homeassistant.loader import Integration
+    from mitsubishi_connect_client.mitsubishi_connect_client import (
+        MitsubishiConnectClient,
+    )
 
-    from .api import IntegrationBlueprintApiClient
-    from .coordinator import BlueprintDataUpdateCoordinator
+    from .coordinator import MitsbishiConnectDataUpdateCoordinator
 
 
-type IntegrationBlueprintConfigEntry = ConfigEntry[IntegrationBlueprintData]
+type MitsubishiConnectConfigEntry = ConfigEntry[MitsubishiConnectData]
 
 
 @dataclass
-class IntegrationBlueprintData:
+class MitsubishiConnectData:
     """Data for the Blueprint integration."""
 
-    client: IntegrationBlueprintApiClient
-    coordinator: BlueprintDataUpdateCoordinator
+    client: MitsubishiConnectClient
+    coordinator: MitsbishiConnectDataUpdateCoordinator
     integration: Integration
