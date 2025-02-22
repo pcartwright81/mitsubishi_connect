@@ -10,7 +10,7 @@ from __future__ import annotations
 from datetime import timedelta
 from typing import TYPE_CHECKING
 
-from homeassistant.const import Platform
+from homeassistant.const import CONF_PASSWORD, CONF_USERNAME, Platform
 from homeassistant.loader import async_get_loaded_integration
 from mitsubishi_connect_client.mitsubishi_connect_client import MitsubishiConnectClient
 
@@ -26,7 +26,7 @@ if TYPE_CHECKING:
 PLATFORMS: list[Platform] = [
     Platform.SENSOR,
     Platform.BINARY_SENSOR,
-    Platform.SWITCH,
+    Platform.DEVICE_TRACKER,
 ]
 
 
@@ -40,10 +40,13 @@ async def async_setup_entry(
         hass=hass,
         logger=LOGGER,
         name=DOMAIN,
-        update_interval=timedelta(minutes=10),
+        update_interval=timedelta(seconds=15),
     )
     entry.runtime_data = MitsubishiConnectData(
-        client=MitsubishiConnectClient(),
+        client=MitsubishiConnectClient(
+            entry.data[CONF_USERNAME],
+            entry.data[CONF_PASSWORD],
+        ),
         integration=async_get_loaded_integration(hass, entry.domain),
         coordinator=coordinator,
     )

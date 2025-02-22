@@ -20,7 +20,7 @@ type MitsubishiConnectConfigEntry = ConfigEntry[MitsubishiConnectData]
 
 @dataclass
 class MitsubishiConnectData:
-    """Data for the Blueprint integration."""
+    """Data for the Mitsubishi Connect integration."""
 
     client: MitsubishiConnectClient
     coordinator: MitsbishiConnectDataUpdateCoordinator

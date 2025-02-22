@@ -9,11 +9,11 @@ from homeassistant.helpers import selector
 from mitsubishi_connect_client.mitsubishi_connect_client import MitsubishiConnectClient
 from slugify import slugify
 
-from .const import DOMAIN, LOGGER
+from .const import CONF_PIN, DOMAIN, LOGGER
 
 
-class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
-    """Config flow for Blueprint."""
+class MitsubishiConnectFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
+    """Config flow for Mitsubishi Connec."""
 
     VERSION = 1
 
@@ -58,6 +58,11 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                         ),
                     ),
                     vol.Required(CONF_PASSWORD): selector.TextSelector(
+                        selector.TextSelectorConfig(
+                            type=selector.TextSelectorType.PASSWORD,
+                        ),
+                    ),
+                    vol.Required(CONF_PIN): selector.TextSelector(
                         selector.TextSelectorConfig(
                             type=selector.TextSelectorType.PASSWORD,
                         ),

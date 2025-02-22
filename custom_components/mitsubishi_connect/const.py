@@ -6,4 +6,4 @@ LOGGER: Logger = getLogger(__package__)
 
 DOMAIN = "mitsubishi_connect"
 ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
-PIN = "pin"
+CONF_PIN = "pin"
