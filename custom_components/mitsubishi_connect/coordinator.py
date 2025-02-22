@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import UTC, datetime, timedelta
 from typing import TYPE_CHECKING
 
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
@@ -33,6 +34,16 @@ class MitsbishiConnectDataUpdateCoordinator(DataUpdateCoordinator):
         self.data = {}
         if not hasattr(client, "token"):
             await client.login()
+            self.data["token_experation"] = datetime.now(tz=UTC) + timedelta(
+                seconds=client.token.expires_in
+            )
+            self.data["refresh_experation"] = datetime.now(tz=UTC) + timedelta(
+                seconds=client.token.refresh_expires_in
+            )
+        elif (
+            datetime.now(tz=UTC) + timedelta(minutes=5) > self.data["token_experation"]
+        ):
+            await client.refresh_token()
         vehicles = await client.get_vehicles()
         for vehicle in vehicles.vehicles:
             vehicle_state = await client.get_vehicle_state(vehicle.vin)
