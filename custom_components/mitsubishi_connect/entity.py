@@ -41,7 +41,6 @@ class MitsubishiConnectEntity(CoordinatorEntity[MitsbishiConnectDataUpdateCoordi
             name=f"{self.vehicle_state.vin}",
         )
 
-
     @property
     def unique_id(self) -> str | None:
         """Return a unique identifier for this sensor."""

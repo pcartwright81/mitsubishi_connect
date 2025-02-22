@@ -1,4 +1,5 @@
 """Define a device tracker."""
+
 from collections.abc import Callable
 
 from attr import dataclass
