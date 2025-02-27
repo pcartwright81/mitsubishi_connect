@@ -1,7 +1,7 @@
 colorlog==6.9.0
 homeassistant==2025.2.5
 pip>=21.3.1
-ruff==0.9.7
+ruff==0.9.8
 mitsubishi-connect-client==0.0.3
 pydantic==2.10.6
 debugpy==1.8.12
