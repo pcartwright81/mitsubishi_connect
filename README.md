@@ -10,7 +10,7 @@
 [![Discord][discord-shield]][discord]
 [![Community Forum][forum-shield]][forum]
 
-_Integration to integrate with [mitsubishi_connect].
+Integration to integrate with [mitsubishi_connect].
 
 **This integration will set up the following platforms.**
 
