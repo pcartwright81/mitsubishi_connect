@@ -8,5 +8,8 @@
   "documentation": "https://github.com/pcartwright81/mitsubishi_connect",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/pcartwright81/mitsubishi_connect/issues",
-  "version": "0.1.0"
+  "requirements": [
+    "mitsubishi-connect-client==v0.0.3"
+  ],
+  "version": "0.0.2"
 }
