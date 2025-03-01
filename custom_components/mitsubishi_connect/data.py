@@ -10,7 +10,10 @@ if TYPE_CHECKING:
     from homeassistant.loader import Integration
     from mitsubishi_connect_client.mitsubishi_connect_client import (
         MitsubishiConnectClient,
+        VehicleState,
     )
+    from mitsubishi_connect_client.vehicle import Vehicle
+    from mitsubishi_connect_client.vehicle_status import VhrItem
 
     from .coordinator import MitsbishiConnectDataUpdateCoordinator
 
@@ -25,3 +28,17 @@ class MitsubishiConnectData:
     client: MitsubishiConnectClient
     coordinator: MitsbishiConnectDataUpdateCoordinator
     integration: Integration
+
+
+@dataclass
+class VehicleData:
+    """Data Class for the Mitsubishi Connect integration."""
+
+    vehicle: Vehicle
+    vehicle_state: VehicleState
+    vhr_item: VhrItem
+
+    @property
+    def vin(self) -> str:
+        """Return the vehicle VIN."""
+        return self.vehicle.vin

@@ -12,7 +12,8 @@ from .coordinator import MitsbishiConnectDataUpdateCoordinator
 
 if TYPE_CHECKING:
     from homeassistant.helpers.entity import EntityDescription
-    from mitsubishi_connect_client.mitsubishi_connect_client import VehicleState
+
+    from custom_components.mitsubishi_connect.data import VehicleData
 
 
 class MitsubishiConnectEntity(CoordinatorEntity[MitsbishiConnectDataUpdateCoordinator]):
@@ -23,25 +24,20 @@ class MitsubishiConnectEntity(CoordinatorEntity[MitsbishiConnectDataUpdateCoordi
     def __init__(
         self,
         coordinator: MitsbishiConnectDataUpdateCoordinator,
-        vehicle_state: VehicleState,
+        vehicle_data: VehicleData,
         description: EntityDescription,
     ) -> None:
         """Initialize."""
         super().__init__(coordinator)
         self.entity_description = description
-        self.vehicle_state = vehicle_state
-        self._attr_unique_id = (
-            f"{self.vehicle_state.vin[-4:]}_{self.entity_description.key}".lower()
-        )
+        self.vehicle_data = vehicle_data
+        self.vin = vehicle_data.vin
+        self._attr_unique_id = f"{self.vin[-4:]}_{self.entity_description.key}".lower()
         self.use_device_name = True
+        vehicle = vehicle_data.vehicle
         self._attr_device_info = DeviceInfo(
             entry_type=DeviceEntryType.SERVICE,
-            identifiers={(DOMAIN, self.vehicle_state.vin[-4:])},
+            identifiers={(DOMAIN, self.vin[-4:])},
             manufacturer="Mitsubishi",
-            name=f"{self.vehicle_state.vin}",
+            name=f"{vehicle.year} {vehicle.model_description}",
         )
-
-    @property
-    def unique_id(self) -> str | None:
-        """Return a unique identifier for this sensor."""
-        return f"{self.vehicle_state.vin[-4:]}_{self.entity_description.key}".lower()

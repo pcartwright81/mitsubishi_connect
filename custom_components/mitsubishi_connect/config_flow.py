@@ -74,5 +74,5 @@ class MitsubishiConnectFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def _test_credentials(self, username: str, password: str) -> None:
         """Validate credentials."""
-        client = MitsubishiConnectClient()
-        await client.login(username, password)
+        client = MitsubishiConnectClient(username, password)
+        await client.login()

@@ -24,9 +24,10 @@ if TYPE_CHECKING:
     from .data import MitsubishiConnectConfigEntry
 
 PLATFORMS: list[Platform] = [
-    Platform.SENSOR,
+    Platform.BUTTON,
     Platform.BINARY_SENSOR,
     Platform.DEVICE_TRACKER,
+    Platform.SENSOR,
 ]
 
 
