@@ -9,10 +9,9 @@ from homeassistant.components.device_tracker import (
 )
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from mitsubishi_connect_client.mitsubishi_connect_client import VehicleState
 
 from .coordinator import MitsbishiConnectDataUpdateCoordinator
-from .data import MitsubishiConnectConfigEntry
+from .data import MitsubishiConnectConfigEntry, VehicleData
 from .entity import MitsubishiConnectEntity
 
 
@@ -22,16 +21,16 @@ class MitsubishiConnectTrackerEntityDescription(
 ):
     """Describes a here comes the bus tracker."""
 
-    latitude_fn: Callable[[VehicleState], float | None]
-    longitude_fn: Callable[[VehicleState], float | None]
+    latitude_fn: Callable[[VehicleData], float | None]
+    longitude_fn: Callable[[VehicleData], float | None]
 
 
-DEVICE_TRACKERS = [
+ENTITY_DESCRIPTION = [
     MitsubishiConnectTrackerEntityDescription(
         name="",
         key="location",
-        latitude_fn=lambda x: x.state.ext_loc_map.lat,
-        longitude_fn=lambda x: x.state.ext_loc_map.lon,
+        latitude_fn=lambda x: x.vehicle_state.state.ext_loc_map.lat,
+        longitude_fn=lambda x: x.vehicle_state.state.ext_loc_map.lon,
     ),
 ]
 
@@ -43,9 +42,13 @@ async def async_setup_entry(
 ) -> None:
     """Set up bus sensors."""
     async_add_entities(
-        MitsubishiConnectTracker(entry.runtime_data.coordinator, vehicle_state, tracker)
-        for vehicle_state in entry.runtime_data.coordinator.data.values()
-        for tracker in DEVICE_TRACKERS
+        MitsubishiConnectTracker(
+            coordinator=entry.runtime_data.coordinator,
+            entity_description=entity_description,
+            vehicle_data=vehicle_data,
+        )
+        for entity_description in ENTITY_DESCRIPTION
+        for vehicle_data in entry.runtime_data.coordinator.data.values()
     )
 
 
@@ -57,21 +60,21 @@ class MitsubishiConnectTracker(MitsubishiConnectEntity, TrackerEntity):
     def __init__(
         self,
         coordinator: MitsbishiConnectDataUpdateCoordinator,
-        vehicle_state: VehicleState,
-        description: MitsubishiConnectTrackerEntityDescription,
+        vehicle_data: VehicleData,
+        entity_description: MitsubishiConnectTrackerEntityDescription,
     ) -> None:
         """Pass coordinator to CoordinatorEntity."""
-        super().__init__(coordinator, vehicle_state, description)
+        super().__init__(coordinator, vehicle_data, entity_description)
 
     @property
     def latitude(self) -> float | None:
         """Return latitude value of the device."""
-        return self.entity_description.latitude_fn(self.vehicle_state)
+        return self.entity_description.latitude_fn(self.vehicle_data)
 
     @property
     def longitude(self) -> float | None:
         """Return longitude value of the device."""
-        return self.entity_description.longitude_fn(self.vehicle_state)
+        return self.entity_description.longitude_fn(self.vehicle_data)
 
     @property
     def location_accuracy(self) -> int:
@@ -81,6 +84,8 @@ class MitsubishiConnectTracker(MitsubishiConnectEntity, TrackerEntity):
     @callback
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
-        if self.vehicle_state.vin in self.coordinator.data:
-            self.vehicle_state = self.coordinator.data[self.vehicle_state.vin]
+        if self.vin in self.coordinator.data:
+            self.vehicle_data.vehicle_state = self.coordinator.data[
+                self.vin
+            ].vehicle_state
             self.async_write_ha_state()

@@ -13,10 +13,9 @@ from .entity import MitsubishiConnectEntity
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
     from homeassistant.helpers.entity_platform import AddEntitiesCallback
-    from mitsubishi_connect_client.mitsubishi_connect_client import VehicleState
 
     from .coordinator import MitsbishiConnectDataUpdateCoordinator
-    from .data import MitsubishiConnectConfigEntry
+    from .data import MitsubishiConnectConfigEntry, VehicleData
 
 ENTITY_DESCRIPTIONS = (
     ButtonEntityDescription(
@@ -36,10 +35,10 @@ async def async_setup_entry(
         MitsubishiConnectButton(
             coordinator=entry.runtime_data.coordinator,
             entity_description=entity_description,
-            vehicle_state=vehicle_state,
+            vehicle_data=vehicle_data,
         )
         for entity_description in ENTITY_DESCRIPTIONS
-        for vehicle_state in entry.runtime_data.coordinator.data.values()
+        for vehicle_data in entry.runtime_data.coordinator.data.values()
     )
 
 
@@ -49,15 +48,13 @@ class MitsubishiConnectButton(MitsubishiConnectEntity, ButtonEntity):
     def __init__(
         self,
         coordinator: MitsbishiConnectDataUpdateCoordinator,
-        vehicle_state: VehicleState,
+        vehicle_data: VehicleData,
         entity_description: ButtonEntityDescription,
     ) -> None:
         """Initialize the button class."""
-        super().__init__(coordinator, vehicle_state, entity_description)
+        super().__init__(coordinator, vehicle_data, entity_description)
         self.entity_description: ButtonEntityDescription = entity_description
 
     async def async_press(self) -> None:
         """Handle the button press."""
-        await self.coordinator.send_command(
-            self.vehicle_state.vin, self.entity_description.key
-        )
+        await self.coordinator.send_command(self.vin, self.entity_description.key)

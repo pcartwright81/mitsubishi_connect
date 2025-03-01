@@ -8,4 +8,3 @@ DOMAIN = "mitsubishi_connect"
 ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
 CONF_PIN = "pin"
 LIGHTS = "lights"
-
