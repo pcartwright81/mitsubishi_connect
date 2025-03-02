@@ -54,7 +54,7 @@ class MitsbishiConnectDataUpdateCoordinator(
     async def _check_login(self) -> None:
         """Ensure the api is ready to use."""
 
-        def set_token() -> None:
+        def set_token_timeout() -> None:
             self.token_expiration = datetime.now(tz=UTC) + timedelta(
                 seconds=client.token.expires_in
             )
@@ -65,8 +65,8 @@ class MitsbishiConnectDataUpdateCoordinator(
         client = self.config_entry.runtime_data.client
         if not hasattr(client, "token"):
             await client.login()
-            set_token()
+            set_token_timeout()
             return
-        if datetime.now(tz=UTC) + timedelta(minutes=5) > self.token_expiration:
+        if datetime.now(tz=UTC) + timedelta(minutes=15) > self.token_expiration:
             await client.refresh_token()
-            set_token()
+            set_token_timeout()
