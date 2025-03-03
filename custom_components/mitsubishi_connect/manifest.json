@@ -9,7 +9,7 @@
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/pcartwright81/mitsubishi_connect/issues",
   "requirements": [
-    "mitsubishi-connect-client==v0.0.5"
+    "mitsubishi-connect-client==v0.0.6"
   ],
   "version": "0.0.4"
 }
