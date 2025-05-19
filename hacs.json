@@ -1,5 +1,4 @@
 {
     "name": "Mitsubishi Connect",
-    "homeassistant": "2025.2.4",
-    "hacs": "2.0.2"
+    "homeassistant": "2025.2.4"
 }
