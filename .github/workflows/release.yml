@@ -24,6 +24,6 @@ jobs:
           zip mitsubishi_connect.zip -r ./
 
       - name: "Upload the ZIP file to the release"
-        uses: "softprops/action-gh-release@v2.3.0"
+        uses: "softprops/action-gh-release@v2.3.2"
         with:
           files: ${{ github.workspace }}/custom_components/mitsubishi_connect/mitsubishi_connect.zip
