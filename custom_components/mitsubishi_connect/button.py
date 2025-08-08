@@ -1,13 +1,10 @@
-"""Button platform for creality_box_control."""
+"""Button platform for Mitsubishi Connect control."""
 
 from __future__ import annotations
 
-from tkinter import Button
 from typing import TYPE_CHECKING
 
 from homeassistant.components.button import ButtonEntity, ButtonEntityDescription
-
-from custom_components.mitsubishi_connect.const import LIGHTS
 
 from .entity import MitsubishiConnectEntity
 
@@ -54,7 +51,6 @@ class MitsubishiConnectButton(MitsubishiConnectEntity, ButtonEntity):
         entity_description: ButtonEntityDescription,
     ) -> None:
         """Initialize the button class."""
-
         super().__init__(coordinator, vehicle_data, entity_description)
         self.entity_description: ButtonEntityDescription = entity_description
 
