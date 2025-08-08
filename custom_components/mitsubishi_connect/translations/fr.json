@@ -56,7 +56,7 @@
             }
         },
         "button": {
-            "lights": {
+            "LIGHTS": {
                 "name": "Lumières"
             }
         },

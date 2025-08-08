@@ -6,6 +6,8 @@ from typing import TYPE_CHECKING
 
 from homeassistant.components.button import ButtonEntity, ButtonEntityDescription
 
+from custom_components.mitsubishi_connect.const import LIGHTS
+
 from .entity import MitsubishiConnectEntity
 
 if TYPE_CHECKING:
@@ -17,7 +19,7 @@ if TYPE_CHECKING:
 
 ENTITY_DESCRIPTIONS = (
     ButtonEntityDescription(
-        key="LIGHTS",
+        key=LIGHTS,
     ),
 )
 
@@ -40,7 +42,7 @@ async def async_setup_entry(
 
 
 class MitsubishiConnectButton(MitsubishiConnectEntity, ButtonEntity):
-    """control Button class."""
+    """Control Button class."""
 
     _attr_has_entity_name = True
 
@@ -56,7 +58,7 @@ class MitsubishiConnectButton(MitsubishiConnectEntity, ButtonEntity):
 
     @property
     def translation_key(self) -> str:
-        """Return the translation key of the binary sensor."""
+        """Return the translation key for the entity."""
         return self.entity_description.key
 
     async def async_press(self) -> None:
