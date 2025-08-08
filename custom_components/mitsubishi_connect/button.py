@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 
 ENTITY_DESCRIPTIONS = (
     ButtonEntityDescription(
-        key=LIGHTS,
+        key=LIGHTS.lower(),
     ),
 )
 
