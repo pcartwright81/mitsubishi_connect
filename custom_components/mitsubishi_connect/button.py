@@ -1,4 +1,4 @@
-"""Button platform for creality_box_control."""
+"""Button platform for Mitsubishi Connect control."""
 
 from __future__ import annotations
 
@@ -19,8 +19,7 @@ if TYPE_CHECKING:
 
 ENTITY_DESCRIPTIONS = (
     ButtonEntityDescription(
-        key=LIGHTS,
-        name="Lights",
+        key=LIGHTS.lower(),
     ),
 )
 
@@ -43,7 +42,9 @@ async def async_setup_entry(
 
 
 class MitsubishiConnectButton(MitsubishiConnectEntity, ButtonEntity):
-    """creality_box_control Button class."""
+    """Control Button class."""
+
+    _attr_has_entity_name = True
 
     def __init__(
         self,
@@ -54,6 +55,11 @@ class MitsubishiConnectButton(MitsubishiConnectEntity, ButtonEntity):
         """Initialize the button class."""
         super().__init__(coordinator, vehicle_data, entity_description)
         self.entity_description: ButtonEntityDescription = entity_description
+
+    @property
+    def translation_key(self) -> str:
+        """Return the translation key for the entity."""
+        return self.entity_description.key
 
     async def async_press(self) -> None:
         """Handle the button press."""

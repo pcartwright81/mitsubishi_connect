@@ -36,7 +36,6 @@ class MitsubishiConnectSensorEntityDescription(
 ENTITY_DESCRIPTIONS = (
     MitsubishiConnectSensorEntityDescription(
         key="odometer",
-        name="Odometer",
         icon="mdi:counter",
         value_fn=lambda x: next(
             iter(x.vehicle_state.state.odo[-1].values())
@@ -44,7 +43,6 @@ ENTITY_DESCRIPTIONS = (
     ),
     MitsubishiConnectSensorEntityDescription(
         key="range",
-        name="range",
         icon="mdi:numeric",
         value_fn=lambda x: x.vehicle_state.state.charging_control.cruising_range_combined,  # noqa: E501
     ),
@@ -71,6 +69,7 @@ async def async_setup_entry(
 class MitsubishiConnectSensor(MitsubishiConnectEntity, SensorEntity):
     """mitsubishi_connect Sensor class."""
 
+    _attr_has_entity_name = True
     entity_description: MitsubishiConnectSensorEntityDescription
 
     def __init__(
@@ -87,6 +86,11 @@ class MitsubishiConnectSensor(MitsubishiConnectEntity, SensorEntity):
     def native_value(self) -> Any:
         """Return the native value of the sensor."""
         return self.entity_description.value_fn(self.vehicle_data)
+
+    @property
+    def translation_key(self) -> str:
+        """Return the translation key for the entity."""
+        return self.entity_description.key
 
     @callback
     def _handle_coordinator_update(self) -> None:

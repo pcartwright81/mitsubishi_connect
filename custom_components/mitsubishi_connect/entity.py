@@ -33,6 +33,9 @@ class MitsubishiConnectEntity(CoordinatorEntity[MitsbishiConnectDataUpdateCoordi
         self.vehicle_data = vehicle_data
         self.vin = vehicle_data.vin
         self._attr_unique_id = f"{self.vin[-4:]}_{self.entity_description.key}".lower()
+        self.entity_id = (
+            f"{DOMAIN}.{self.vin[-4:]}_{self.entity_description.key}".lower()
+        )
         self.use_device_name = True
         vehicle = vehicle_data.vehicle
         self._attr_device_info = DeviceInfo(

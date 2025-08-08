@@ -27,7 +27,6 @@ class MitsubishiConnectTrackerEntityDescription(
 
 ENTITY_DESCRIPTION = [
     MitsubishiConnectTrackerEntityDescription(
-        name="",
         key="location",
         latitude_fn=lambda x: x.vehicle_state.state.ext_loc_map.lat,
         longitude_fn=lambda x: x.vehicle_state.state.ext_loc_map.lon,
@@ -55,6 +54,7 @@ async def async_setup_entry(
 class MitsubishiConnectTracker(MitsubishiConnectEntity, TrackerEntity):
     """Defines a single bus sensor."""
 
+    _attr_has_entity_name = True
     entity_description: MitsubishiConnectTrackerEntityDescription
 
     def __init__(
@@ -80,6 +80,11 @@ class MitsubishiConnectTracker(MitsubishiConnectEntity, TrackerEntity):
     def location_accuracy(self) -> int:
         """Return the gps accuracy of the device."""
         return 100
+
+    @property
+    def translation_key(self) -> str:
+        """Return the translation key for the entity."""
+        return self.entity_description.key
 
     @callback
     def _handle_coordinator_update(self) -> None:
