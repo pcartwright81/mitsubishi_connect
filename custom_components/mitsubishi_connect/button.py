@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from tkinter import Button
 from typing import TYPE_CHECKING
 
 from homeassistant.components.button import ButtonEntity, ButtonEntityDescription
@@ -19,8 +20,7 @@ if TYPE_CHECKING:
 
 ENTITY_DESCRIPTIONS = (
     ButtonEntityDescription(
-        key=LIGHTS,
-        name="Lights",
+        key="LIGHTS",
     ),
 )
 
@@ -43,7 +43,9 @@ async def async_setup_entry(
 
 
 class MitsubishiConnectButton(MitsubishiConnectEntity, ButtonEntity):
-    """creality_box_control Button class."""
+    """control Button class."""
+
+    _attr_has_entity_name = True
 
     def __init__(
         self,
@@ -52,8 +54,14 @@ class MitsubishiConnectButton(MitsubishiConnectEntity, ButtonEntity):
         entity_description: ButtonEntityDescription,
     ) -> None:
         """Initialize the button class."""
+
         super().__init__(coordinator, vehicle_data, entity_description)
         self.entity_description: ButtonEntityDescription = entity_description
+
+    @property
+    def translation_key(self) -> str:
+        """Return the translation key of the binary sensor."""
+        return self.entity_description.key
 
     async def async_press(self) -> None:
         """Handle the button press."""

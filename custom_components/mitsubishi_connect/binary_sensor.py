@@ -38,77 +38,66 @@ class MitsubishiConnectBinarySensorEntityDescription(
 ENTITY_DESCRIPTIONS = (
     MitsubishiConnectBinarySensorEntityDescription(
         key="cst",
-        name="cst",
         icon="mdi:engine-off",
         icon_on="mdi:engine",
         value_fn=lambda x: bool(x.vehicle_state.state.cst),
     ),
     MitsubishiConnectBinarySensorEntityDescription(
         key="tu_state",
-        name="tu_state",
         icon="mdi:engine-off",
         icon_on="mdi:engine",
         value_fn=lambda x: bool(x.vehicle_state.state.tu_state),
     ),
     MitsubishiConnectBinarySensorEntityDescription(
         key="ods",
-        name="ods",
         icon="mdi:engine-off",
         icon_on="mdi:engine",
         value_fn=lambda x: bool(x.vehicle_state.state.ods),
     ),
     MitsubishiConnectBinarySensorEntityDescription(
         key="ignition",
-        name="Ignition",
         icon="mdi:engine-off",
         icon_on="mdi:engine",
         value_fn=lambda x: bool(x.vehicle_state.state.ignition_state),
     ),
     MitsubishiConnectBinarySensorEntityDescription(
         key="theft_alarm",
-        name="theft_alarm",
         icon="mdi:engine-off",
         icon_on="mdi:engine",
         value_fn=lambda x: bool(x.vehicle_state.state.theft_alarm),
     ),
     MitsubishiConnectBinarySensorEntityDescription(
         key="svla",
-        name="svla",
         icon="mdi:engine-off",
         icon_on="mdi:engine",
         value_fn=lambda x: bool(x.vehicle_state.state.svla),
     ),
     MitsubishiConnectBinarySensorEntityDescription(
         key="svtb",
-        name="svtb",
         icon="mdi:engine-off",
         icon_on="mdi:engine",
         value_fn=lambda x: bool(x.vehicle_state.state.svtb),
     ),
     MitsubishiConnectBinarySensorEntityDescription(
         key="diagnostic",
-        name="diagnostic",
         icon="mdi:engine-off",
         icon_on="mdi:engine",
         value_fn=lambda x: bool(x.vehicle_state.state.diagnostic),
     ),
     MitsubishiConnectBinarySensorEntityDescription(
         key="privacy",
-        name="privacy",
         icon="mdi:engine-off",
         icon_on="mdi:engine",
         value_fn=lambda x: bool(x.vehicle_state.state.privacy),
     ),
     MitsubishiConnectBinarySensorEntityDescription(
         key="factory_reset",
-        name="factory_reset",
         icon="mdi:engine-off",
         icon_on="mdi:engine",
         value_fn=lambda x: bool(x.vehicle_state.state.factory_reset),
     ),
     MitsubishiConnectBinarySensorEntityDescription(
         key="accessible",
-        name="Accessible",
         icon="mdi:engine-off",
         icon_on="mdi:car-connected",
         value_fn=lambda x: bool(x.vehicle_state.state.accessible),
@@ -136,6 +125,7 @@ async def async_setup_entry(
 class MitsubishiConnectBinarySensor(MitsubishiConnectEntity, BinarySensorEntity):
     """mitsubishi_connect binary_sensor class."""
 
+    _attr_has_entity_name = True
     entity_description: MitsubishiConnectBinarySensorEntityDescription
 
     def __init__(
@@ -154,6 +144,11 @@ class MitsubishiConnectBinarySensor(MitsubishiConnectEntity, BinarySensorEntity)
         """Return true if the binary sensor is on."""
         self._is_on = self.entity_description.value_fn(self.vehicle_data)
         return self._is_on
+
+    @property
+    def translation_key(self) -> str:
+        """Return the translation key of the binary sensor."""
+        return self.entity_description.key
 
     @property
     def icon(self) -> str | None:

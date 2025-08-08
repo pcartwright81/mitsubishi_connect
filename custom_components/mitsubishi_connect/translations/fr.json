@@ -2,21 +2,21 @@
     "config": {
         "step": {
             "user": {
-                "description": "If you need help with the configuration have a look here: https://github.com/pcartwright81/mitsubishi_connect",
+                "description": "Si vous avez besoin d'aide avec la configuration, jetez un coup d'oeil ici: https://github.com/pcartwright81/mitsubishi_connect",
                 "data": {
-                    "username": "Username",
-                    "password": "Password",
-                    "pin": "Pin"
+                    "username": "Nom d'utilisateur",
+                    "password": "Mot de passe",
+                    "pin": "NIP"
                 }
             }
         },
         "error": {
-            "auth": "Username/Password is wrong.",
-            "connection": "Unable to connect to the server.",
-            "unknown": "Unknown error occurred."
+            "auth": "Nom d'utilisateur et/ou mot de passe non valide.",
+            "connection": "Impossible de se connecter au serveur.",
+            "unknown": "Une erreur inconnue s'est produite."
         },
         "abort": {
-            "already_configured": "This entry is already configured."
+            "already_configured": "Une erreur inconnue s'est produite."
         }
     },
     "entity": {
@@ -28,19 +28,19 @@
                 "name": "CST"
             },
             "diagnostic": {
-                "name": "Diagnostic"
+                "name": "Diagnostique"
             },
             "factory_reset": {
-                "name": "Factory Reset"
+                "name": "Réinitialisation d'usine"
             },
             "ignition": {
-                "name": "Ignition"
+                "name": "Allumage"
             },
             "ods": {
                 "name": "ODS"
             },
             "privacy": {
-                "name": "Privacy"
+                "name": "Confidentialité"
             },
             "svla": {
                 "name": "SVLA"
@@ -49,28 +49,28 @@
                 "name": "SVTB"
             },
             "theft_alarm": {
-                "name": "Theft Alarm"
+                "name": "Alarme de vol"
             },
             "tu_state": {
-                "name": "TU State"
+                "name": "État TU"
             }
         },
         "button": {
             "lights": {
-                "name": "Lights"
+                "name": "Lumières"
             }
         },
         "device_tracker": {
             "location": {
-                "name": "Location"
+                "name": "Emplacement"
             }
         },
         "sensor": {
             "odometer": {
-                "name": "Odometer"
+                "name": "Odomètre"
             },
             "range": {
-                "name": "Range"
+                "name": "Autonomie"
             }
         }
     }
