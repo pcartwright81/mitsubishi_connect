@@ -1,0 +1,35 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Enforce Dev Container",
+            "type": "shell",
+            "windows": {
+                "command": "powershell",
+                "args": [
+                    "-NoProfile",
+                    "-Command",
+                    "if (-not $env:REMOTE_CONTAINERS) { Write-Host '❌ LOCAL EDITING BLOCKED ❌' -ForegroundColor Red; Write-Host 'This repo must be run in a Dev Container.' -ForegroundColor Yellow; Write-Host 'Run the Start-Dev.ps1 script instead.' -ForegroundColor Gray; exit 1 }"
+                ]
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Home Assistant on port 8123",
+            "type": "shell",
+            "command": "scripts/develop",
+            "problemMatcher": []
+        },
+    ]
+}

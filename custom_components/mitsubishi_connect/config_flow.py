@@ -9,7 +9,12 @@ from homeassistant.helpers import selector
 from mitsubishi_connect_client.mitsubishi_connect_client import MitsubishiConnectClient
 from slugify import slugify
 
-from .const import CONF_PIN, DOMAIN, LOGGER
+from .const import CONF_PIN, CONF_REGION, DOMAIN, LOGGER
+
+REGION_OPTIONS = {
+    "US": "North America (US)",
+    "EU": "Europe (EU)",
+}
 
 
 class MitsubishiConnectFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
@@ -28,6 +33,7 @@ class MitsubishiConnectFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 await self._test_credentials(
                     username=user_input[CONF_USERNAME],
                     password=user_input[CONF_PASSWORD],
+                    region=user_input[CONF_REGION],
                 )
             except Exception as exception:  # noqa: BLE001
                 LOGGER.exception(exception)
@@ -67,12 +73,26 @@ class MitsubishiConnectFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                             type=selector.TextSelectorType.PASSWORD,
                         ),
                     ),
+                    vol.Required(
+                        CONF_REGION,
+                        default=(user_input or {}).get(CONF_REGION, "US"),
+                    ): selector.SelectSelector(
+                        selector.SelectSelectorConfig(
+                            options=[
+                                selector.SelectOptionDict(value=k, label=v)
+                                for k, v in REGION_OPTIONS.items()
+                            ],
+                            mode=selector.SelectSelectorMode.DROPDOWN,
+                        ),
+                    ),
                 },
             ),
             errors=_errors,
         )
 
-    async def _test_credentials(self, username: str, password: str) -> None:
+    async def _test_credentials(
+        self, username: str, password: str, region: str
+    ) -> None:
         """Validate credentials."""
-        client = MitsubishiConnectClient(username, password)
+        client = MitsubishiConnectClient(username, password, region)
         await client.login()

@@ -6,7 +6,11 @@
                 "data": {
                     "username": "Username",
                     "password": "Password",
-                    "pin": "Pin"
+                    "pin": "Pin",
+                    "region": "Region"
+                },
+                "data_description": {
+                    "region": "Select your region (US for North America, EU for Europe)"
                 }
             }
         },

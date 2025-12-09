@@ -1,0 +1,9 @@
+colorlog==6.10.1
+pytest==8.4.2
+pytest-cov==7.0.0
+pytest-homeassistant-custom-component==0.13.297
+homeassistant==2025.11.3
+pip>=24.2
+ruff==0.14.4
+pytest-md
+pytest-emoji
