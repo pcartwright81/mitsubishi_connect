@@ -1,4 +1,5 @@
-"""Custom integration to integrate mitsubishi_connect with Home Assistant.
+"""
+Custom integration to integrate mitsubishi_connect with Home Assistant.
 
 For more details about this integration, please refer to
 https://github.com/pcartwright81/mitsubishi_connect
@@ -38,7 +39,7 @@ async def async_setup_entry(
     """Set up this integration using UI."""
     # Get region from config, default to US for backwards compatibility
     region = entry.data.get(CONF_REGION, "US")
-    
+
     coordinator = MitsbishiConnectDataUpdateCoordinator(
         hass=hass,
         logger=LOGGER,

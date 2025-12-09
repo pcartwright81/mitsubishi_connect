@@ -8,11 +8,38 @@ __pycache__
 
 # misc
 .coverage
-.vscode
 coverage.xml
 .ruff_cache
 
 
-# Home Assistant configuration
+# Home Assistant temporary files and logs
+.HA_VERSION
+.ha_run.lock
+home-assistant.log*
+home-assistant_v2*
+coverage.xml
+
+# Runtime caches and volatile data
+.ruff_cache
+.storage/
+deps/
+tts/
+
+# Configuration files that may contain secrets or are auto-generated
+secrets.yaml
+automations.yaml
+scenes.yaml
+scripts.yaml
+configuration.yaml
+
+# Configuration directories to exclude everything inside them
 config/*
-!config/configuration.yaml
+
+# Directories for IDE/Editor settings
+#.vscode/
+
+# Cloud integration cache
+.cloud/
+
+# Blueprints (optional exclusion, include if you manage them separately)
+blueprints/
